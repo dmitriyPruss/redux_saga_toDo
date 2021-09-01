@@ -16,7 +16,7 @@ export const checkTask = changedInfo => ({
 // Create:
 export const createTaskAction = task => ({
   type: ACTION_TYPES.CREATE_TASK_ACTION,
-  task: task,
+  task,
 });
 
 export const createTaskRequest = () => ({
@@ -25,58 +25,50 @@ export const createTaskRequest = () => ({
 
 export const createTaskSuccess = task => ({
   type: ACTION_TYPES.CREATE_TASK_SUCCESS,
-  task: task,
+  task,
 });
 
-export const createTaskError = e => ({
+export const createTaskError = error => ({
   type: ACTION_TYPES.CREATE_TASK_ERROR,
-  error: e,
+  error,
 });
 
 //Delete:
 export const deleteTaskAction = id => ({
   type: ACTION_TYPES.DELETE_TASK_ACTION,
-  id: id,
+  id,
 });
 
 export const deleteTaskRequest = () => ({
   type: ACTION_TYPES.DELETE_TASK_REQUEST,
 });
 
-export const deleteTaskSuccess = deletedTask => {
-  console.log(`deletedTask deleteTaskSuccess`, deletedTask);
+export const deleteTaskSuccess = deletedTask => ({
+  type: ACTION_TYPES.DELETE_TASK_SUCCESS,
+  deletedTask,
+});
 
-  return {
-    type: ACTION_TYPES.DELETE_TASK_SUCCESS,
-    deletedTask,
-  };
-};
-
-export const deleteTaskError = e => ({
+export const deleteTaskError = error => ({
   type: ACTION_TYPES.DELETE_TASK_ERROR,
-  error: e,
+  error,
 });
 
 //Update:
-export const updateTaskAction = id => {
-  return {
-    type: ACTION_TYPES.UPDATE_TASK_ACTION,
-    id: id,
-  };
-};
+export const updateTaskAction = id => ({
+  type: ACTION_TYPES.UPDATE_TASK_ACTION,
+  id,
+});
 
 export const updateTaskRequest = () => ({
   type: ACTION_TYPES.UPDATE_TASK_REQUEST,
 });
 
-export const updateTaskSuccess = newTasks => {
-  return {
-    type: ACTION_TYPES.UPDATE_TASK_SUCCESS,
-    newTasks,
-  };
-};
+export const updateTaskSuccess = newTasks => ({
+  type: ACTION_TYPES.UPDATE_TASK_SUCCESS,
+  newTasks,
+});
 
-export const updateTaskError = e => ({
+export const updateTaskError = error => ({
   type: ACTION_TYPES.UPDATE_TASK_ERROR,
-  error: e,
+  error,
 });

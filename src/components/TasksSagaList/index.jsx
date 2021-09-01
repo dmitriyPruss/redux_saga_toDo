@@ -8,19 +8,17 @@ import styles from './../../pages/TodoSagaPage/TodoSagaPage.module.scss';
 function TasksSagaList (props) {
   const {
     theme: { theme },
-    tasksLoad: { isFetching, error, tasks }, /// error!!!
-
+    tasksLoad: { isFetching, error, tasks },
     deleteTask,
     updateTask,
   } = props;
 
-  const mapTask = ({ id, body, isDone }, index) => {
+  const mapTask = ({ id, body }, index) => {
     const checkTaskHandler = () => {
       updateTask(id);
     };
 
     const deleteTaskHandler = () => {
-      console.log('id deleteTaskHandler:>> ', id);
       deleteTask(id);
     };
 
@@ -43,8 +41,28 @@ function TasksSagaList (props) {
 
   return (
     <>
-      {isFetching && <div>Loading...</div>}
-      {error && <div>ERROR!</div>}
+      {isFetching && (
+        <div
+          style={{
+            fontSize: '22px',
+            color: 'blue',
+            textShadow: '3px 3px 7px darkblue',
+          }}
+        >
+          Loading...
+        </div>
+      )}
+      {error && (
+        <div
+          style={{
+            fontSize: '28px',
+            fontWeight: 'bold',
+            textShadow: '0px 3px 3px white, 0px 6px 4px red',
+          }}
+        >
+          ERROR!
+        </div>
+      )}
       <ul className={styles.itemsContainer}>{tasks.map(mapTask)}</ul>
     </>
   );

@@ -20,8 +20,8 @@ export function * createTaskSaga (action) {
   try {
     const { data: newTask } = yield API.createTask(task);
     yield put(createTaskSuccess(newTask));
-  } catch (e) {
-    yield put(createTaskError(e));
+  } catch (error) {
+    yield put(createTaskError(error));
   }
 }
 
@@ -32,11 +32,9 @@ export function * deleteTaskSaga (action) {
 
   try {
     const { data: deletedTask } = yield API.deleteTask(id);
-    // console.log(`deletedTask deleteTaskSaga!`, deletedTask);
-
     yield put(deleteTaskSuccess(deletedTask));
-  } catch (e) {
-    yield put(deleteTaskError(e));
+  } catch (error) {
+    yield put(deleteTaskError(error));
   }
 }
 
@@ -48,7 +46,7 @@ export function * updateTaskSaga (action) {
   try {
     const { data: newTasks } = yield API.updateTask(id);
     yield put(updateTaskSuccess(newTasks));
-  } catch (e) {
-    yield put(updateTaskError(e));
+  } catch (error) {
+    yield put(updateTaskError(error));
   }
 }

@@ -18,19 +18,31 @@ function tasksSagaReducer (state = initialState, action) {
         error: null,
       };
     }
-
     case ACTION_TYPES.CREATE_TASK_SUCCESS: {
       const { task: newTask } = action;
       const { tasks } = state;
 
+      let stopFunc = null;
+      tasks.forEach(task => {
+        if (task.body === newTask.body.trim()) {
+          stopFunc = true;
+        }
+      });
+      if (stopFunc) {
+        return {
+          ...state,
+          isFetching: false,
+        };
+      }
+
       const newTasks = [...tasks, newTask];
+
       return {
         ...state,
         tasks: newTasks,
         isFetching: false,
       };
     }
-
     case ACTION_TYPES.CREATE_TASK_ERROR: {
       const { error } = action;
       return {
@@ -39,6 +51,7 @@ function tasksSagaReducer (state = initialState, action) {
         error,
       };
     }
+
     // DELETE
     case ACTION_TYPES.DELETE_TASK_REQUEST: {
       return {
@@ -51,26 +64,12 @@ function tasksSagaReducer (state = initialState, action) {
       const { deletedTask } = action;
       const { tasks } = state;
 
-      console.log(`deletedTask id`, deletedTask);
-
       const newTasks = [...tasks];
-      console.table(newTasks);
 
       newTasks.splice(
-        newTasks.findIndex(newTask => newTask.id === deletedTask[0].id),
+        newTasks.findIndex(newTask => newTask.id === deletedTask.id),
         1
       );
-
-      // const deletedElement = newTasks.findIndex(
-      //   newTask => newTask.id === deletedTask[0].id
-      // );
-
-      // console.log(
-      //   `deletedElement ACTION_TYPES.DELETE_TASK_SUCCESS`,
-      //   deletedElement
-      // );
-
-      console.dir(newTasks);
 
       return {
         ...state,

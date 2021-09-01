@@ -10,10 +10,6 @@ function TodoSagaPage (props) {
     tasksLoad: { tasks },
   } = props;
 
-  // console.log('props :>> ', props);
-
-  // console.log('tasks TodoSagaPage :>> ', tasks);
-
   return (
     <div className={theme ? styles.containerLight : styles.containerDark}>
       <h1 className={theme ? styles.headerLight : styles.headerDark}>

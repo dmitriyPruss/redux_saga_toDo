@@ -11,6 +11,16 @@ const tasks = [];
 export const createTask = task => {
   const newTask = { ...task, id: Date.now() };
 
+  let stopFunc = null;
+  tasks.forEach(taskItem => {
+    if (taskItem.body === task.body.trim()) {
+      stopFunc = true;
+    }
+  });
+  if (stopFunc) {
+    return;
+  }
+
   tasks.push(newTask);
 
   return Promise.resolve({ data: newTask });
@@ -20,13 +30,13 @@ export const createTask = task => {
 // export const deleteTask = id => apiInstance.delete(`/tasks/${id}`)
 export const deleteTask = id => {
   const index = tasks.findIndex(task => task.id === id);
-  const deletedTask = tasks.splice(index, 1);
+  const [deletedTask] = tasks.splice(index, 1);
 
   return Promise.resolve({ data: deletedTask });
 };
 
 // 'http://127.0.0.1:5000/api/tasks/id'
-// export const updateTask = id => apiInstance.update(`/tasks/${id}`)
+// export const updateTask = id => apiInstance.put(`/tasks/${id}`)
 export const updateTask = id => {
   const newTasks = tasks.map(task => {
     if (task.id === id) {
