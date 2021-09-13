@@ -1,9 +1,7 @@
 import { React } from 'react';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import { Button } from 'react-bootstrap';
 import * as actionCreators from './../../actions';
 import { connect } from 'react-redux';
-import styles from './../../pages/TodoSagaPage/TodoSagaPage.module.scss';
+import TasksListItem from './TasksListItem';
 
 function TasksSagaList (props) {
   const {
@@ -11,7 +9,10 @@ function TasksSagaList (props) {
     tasksLoad: { isFetching, error, tasks },
     deleteTask,
     updateTask,
+    listClasses: { itemsContainer },
   } = props;
+
+  console.log('tasks :>> ', tasks);
 
   const mapTask = ({ id, body }, index) => {
     const checkTaskHandler = () => {
@@ -23,19 +24,14 @@ function TasksSagaList (props) {
     };
 
     return (
-      <li
+      <TasksListItem
         key={id}
-        className={theme ? styles.listItemLight : styles.listItemDark}
-      >
-        <input type='checkbox' onClick={checkTaskHandler} />
-        <span>{body}</span>
-        <Button
-          variant={theme ? 'outline-success' : 'outline-light'}
-          onClick={deleteTaskHandler}
-        >
-          <DeleteOutlineIcon />
-        </Button>
-      </li>
+        body={body}
+        theme={theme}
+        checkTaskHandler={checkTaskHandler}
+        deleteTaskHandler={deleteTaskHandler}
+        listClasses={props.listClasses}
+      />
     );
   };
 
@@ -63,7 +59,7 @@ function TasksSagaList (props) {
           ERROR!
         </div>
       )}
-      <ul className={styles.itemsContainer}>{tasks.map(mapTask)}</ul>
+      <ul className={itemsContainer}>{tasks.map(mapTask)}</ul>
     </>
   );
 }
